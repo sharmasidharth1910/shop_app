@@ -23,7 +23,10 @@ class ProductItem extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             Navigator.pushNamed(
-              context, ProductDetailScreen.id, arguments: product.id,);
+              context,
+              ProductDetailScreen.id,
+              arguments: product.id,
+            );
           },
           child: Image.network(
             product.imageUrl,
@@ -31,14 +34,18 @@ class ProductItem extends StatelessWidget {
           ),
         ),
         footer: GridTileBar(
-          leading: IconButton(
-            icon: Icon(
-              product.isFavourite ? Icons.favorite : Icons.favorite_border,
-              color: Colors.redAccent,
-            ),
-            onPressed: () {
-              product.toggleFavoriteStatus();
-            },
+          leading: Consumer<Product>(
+            builder: (context, product, child) =>
+                IconButton(
+                  icon: Icon(
+                    product.isFavourite ? Icons.favorite : Icons
+                        .favorite_border,
+                    color: Colors.redAccent,
+                  ),
+                  onPressed: () {
+                    product.toggleFavoriteStatus();
+                  },
+                ),
           ),
           trailing: IconButton(
             icon: Icon(
