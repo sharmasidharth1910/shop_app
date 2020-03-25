@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/models/product.dart';
 
-class ProductsProvider with ChangeNotifier
-{
+class ProductsProvider with ChangeNotifier {
   List<Product> _items = [
     Product(
       id: 'p1',
@@ -44,8 +43,7 @@ class ProductsProvider with ChangeNotifier
     return _items.where((product) => product.isFavourite == true).toList();
   }
 
-  List<Product> get items
-  {
+  List<Product> get items {
 //    if(_showFavouritesOnly)
 //      {
 //        return _items.where((prodItem) => prodItem.isFavourite).toList();
@@ -65,9 +63,17 @@ class ProductsProvider with ChangeNotifier
 //    notifyListeners();
 //  }
 
-  void addProduct()
-  {
-    //_items.add();
+  void addProduct(Product product) {
+    final newProduct = Product(
+      title: product.title,
+      imageUrl: product.imageUrl,
+      id: DateTime.now().toString(),
+      price: product.price,
+      description: product.description,
+    );
+    _items.add(newProduct);
+    // _items.insert(0, newProduct);
+    // To insert at a particular position in the list
     notifyListeners();
   }
 
