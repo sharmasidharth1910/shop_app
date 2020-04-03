@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:shop_app/models/product.dart';
 
 class ProductsProvider with ChangeNotifier {
@@ -63,18 +66,35 @@ class ProductsProvider with ChangeNotifier {
 //    notifyListeners();
 //  }
 
-  void addProduct(Product product) {
-    final newProduct = Product(
-      title: product.title,
-      imageUrl: product.imageUrl,
-      id: DateTime.now().toString(),
-      price: product.price,
-      description: product.description,
-    );
-    _items.add(newProduct);
-    // _items.insert(0, newProduct);
-    // To insert at a particular position in the list
-    notifyListeners();
+  Future<void> addProduct(Product product) {
+    const url = "Add the url to your firebase database here";
+    return http
+        .post(
+      url,
+      body: json.encode({
+        "title": product.title,
+        "description": product.description,
+        "imageUrl": product.imageUrl,
+        "price": product.price,
+        "isFavourite": product.isFavourite
+      }),
+    )
+        .then((response) {
+      final newProduct = Product(
+        title: product.title,
+        imageUrl: product.imageUrl,
+        id: json.decode(response.body)['name'],
+        price: product.price,
+        description: product.description,
+      );
+      _items.add(newProduct);
+      // _items.insert(0, newProduct);
+      // To insert at a particular position in the list
+      notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw error;
+    });
   }
 
   Product findById(String id) {
