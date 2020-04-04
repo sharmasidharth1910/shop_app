@@ -32,7 +32,7 @@ class ProductItem extends StatelessWidget {
           },
           child: Image.network(
             product.imageUrl,
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
           ),
         ),
         footer: GridTileBar(
