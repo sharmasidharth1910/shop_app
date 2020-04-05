@@ -43,6 +43,10 @@ class ProductsProvider with ChangeNotifier {
 
 //  var _showFavouritesOnly = false;
 
+  final String authToken;
+
+  ProductsProvider(this.authToken, this._items);
+
   List<Product> get favoriteItems {
     return _items.where((product) => product.isFavourite == true).toList();
   }
@@ -68,7 +72,7 @@ class ProductsProvider with ChangeNotifier {
 //  }
 
   Future<void> addProduct(Product product) async {
-    const url = "https://shop-app-87a35.firebaseio.com/products.json";
+    final url = "Add your url here";
     try {
       final response = await http.post(
         url,
@@ -102,7 +106,7 @@ class ProductsProvider with ChangeNotifier {
   Future<void> updateProduct(String id, Product newProduct) async {
     final productIndex = _items.indexWhere((product) => product.id == id);
     if (productIndex >= 0) {
-      final url = "https://shop-app-87a35.firebaseio.com/products/$id.json";
+      final url = "Add your url here";
       await http.patch(url,
           body: json.encode({
             "title": newProduct.title,
@@ -118,7 +122,7 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = "https://shop-app-87a35.firebaseio.com/products/$id.json";
+    final url = "Add your url here";
     final existingProductIndex =
     _items.indexWhere((product) => product.id == id);
     var existingProduct = _items[existingProductIndex];
@@ -134,7 +138,7 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    const url = "https://shop-app-87a35.firebaseio.com/products.json";
+    final url = "Add your url here";
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
